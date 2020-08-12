@@ -120,7 +120,12 @@ async function onSubmitRegister() {
     notify({ msg: 'Registration success', className: 'alert-success' });
   } catch(err) {
     //show error notify
-    const message = err.message || 'Registration failed';
+    let message = '';
+    if(err.hasOwnProperty('response')) {
+       message = err.response.data.message
+    } else {
+      message = err.message || 'Registration failed';
+    }
     notify({ msg: message, className: 'alert-danger' });
   }
 
