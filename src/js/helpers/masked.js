@@ -10,7 +10,7 @@ export function masked(el) {
   if (!maskPattern) return;
 
   const config = {
-    mask: maskPattern
+    mask: maskPattern,
   };
 
   return new IMask(el, config);

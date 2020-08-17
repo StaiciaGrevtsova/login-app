@@ -8,11 +8,11 @@ import axios from '../plugins/axios';
 export async function login(email, password) {
   try {
     const response = await axios.post(
-      `/auth/login`,
-      JSON.stringify({ email, password})
+      '/auth/login',
+      JSON.stringify({ email, password }),
     );
     return response.data;
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     return Promise.reject(err);
   }
@@ -26,17 +26,16 @@ export async function login(email, password) {
 export async function register(data) {
   try {
     const response = await axios.post(
-      `/auth/signup`,
-      JSON.stringify(data)
+      '/auth/signup',
+      JSON.stringify(data),
     );
 
-    if(response.error) {
+    if (response.error) {
       throw new SyntaxError(response.message);
     }
 
     return response.data;
-  } catch(err) {
+  } catch (err) {
     return Promise.reject(err);
   }
 }
-

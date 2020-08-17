@@ -1,10 +1,10 @@
 const UI = {
-  formLogin: document.forms['loginForm'],
+  formLogin: document.forms.loginForm,
   formLoginInputs: {
     inputEmail: document.getElementById('email'),
     inputPassword: document.getElementById('password'),
   },
-  formRegister: document.forms['regForm'],
+  formRegister: document.forms.regForm,
   formRegisterInputs: {
     inputEmailReg: document.getElementById('reg_email'),
     inputPasswordReg: document.getElementById('reg_password'),

@@ -1,5 +1,5 @@
 function getContainer() {
-  return document.querySelector('.notify-container')
+  return document.querySelector('.notify-container');
 }
 
 function alertTemplate(msg, className, index) {
@@ -25,6 +25,25 @@ function getAlertIndex() {
   return document.querySelectorAll('.notify-container .alert').length;
 }
 
+export function closeNotify(index) {
+  let alert;
+  if (index === undefined) {
+    alert = document.querySelector('.notify-container .alert');
+  } else {
+    alert = document.querySelector(
+      `.notify-container .alert[data-index="${index}"]`,
+    );
+  }
+
+  if (!alert) {
+    console.warn('Alert no found!');
+    return;
+  }
+
+  const container = getContainer();
+  container.removeChild(alert);
+}
+
 /**
  * Function notify/ Show notification message
  * @param {Object} settings
@@ -35,7 +54,7 @@ function getAlertIndex() {
 export function notify({
   msg = 'Info message',
   className = 'alert-info',
-  timeout = 2000
+  timeout = 2000,
 } = {}) {
   if (!getContainer()) {
     createNotifyContainer();
@@ -48,21 +67,4 @@ export function notify({
   container.insertAdjacentHTML('beforeend', template);
 
   setTimeout(() => closeNotify(index), timeout);
-}
-
-export function closeNotify(index) {
-  let alert;
-  if (index === undefined) {
-    alert = document.querySelector('.notify-container .alert');
-  } else {
-    alert = document.querySelector(`.notify-container .alert[data-index="${index}"]`);
-  }
-
-  if (!alert) {
-    console.warn('Alert no found!');
-    return;
-  }
-
-  const container = getContainer();
-  container.removeChild(alert);
 }

@@ -5,7 +5,7 @@ function setToken(request) {
 
   if (!isAuthUrl) {
     const token = localStorage.getItem(isTokenKey);
-    //x-access-token или authorization
+    // x-access-token или authorization
     request.headers['x-access-token'] = token;
   }
 
@@ -16,8 +16,8 @@ function setTokenOnLogin(response) {
   const isLoginUrl = response.config.url.includes('login');
 
   if (isLoginUrl) {
-    const token = response.data.token;
-    localStorage.setItem(isTokenKey, token)
+    const { token } = response.data;
+    localStorage.setItem(isTokenKey, token);
   }
 
   return response;
@@ -32,7 +32,7 @@ function onError(error) {
   return Promise.reject(error);
 }
 
-export default function(axios) {
+export default function (axios) {
   axios.interceptors.request.use(setToken);
   axios.interceptors.response.use(setTokenOnLogin);
   axios.interceptors.response.use(getClearResponse, onError);
