@@ -130,6 +130,5 @@ formRegisterInputs.inputCity.addEventListener('focus', () => {
     });
   }
 });
-
 // denis.m.pcspace@gmail.com
 // dmgame12345

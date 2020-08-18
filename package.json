@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix --color"
   },
   "keywords": [],
   "author": "",
