@@ -39,7 +39,7 @@ export function removeInputError(el) {
 
 /**
  * Function inputAutocompleteCreate
- * @param {HTMLInputElement} el
+ * @param {HTMLElement} el
  * @param {Array} data
  */
 export function inputAutocompleteCreate(el, data) {

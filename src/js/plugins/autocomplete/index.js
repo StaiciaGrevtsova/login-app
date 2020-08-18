@@ -60,8 +60,8 @@ export default function autocomplete(el, arr) {
         b.innerHTML += `<input type='hidden' value='${value}'>`;
 
         b.addEventListener('click', function () {
-          el.value = this.getElementsByTagName('input')[0].value;
-          el.dataset.id = item.id;
+          this.value = this.getElementsByTagName('input')[0].value;
+          this.dataset.id = item.id;
           closeAllLists();
         });
         a.appendChild(b);
@@ -78,10 +78,11 @@ export default function autocomplete(el, arr) {
     const result = arr.find((obj) => obj.value === inputValue);
 
     if (result) {
-      el.dataset.id = result.id;
+      this.dataset.id = result.id;
     } else {
-      el.dataset.id = '';
+      this.dataset.id = '';
     }
+    return 0;
   });
 
   /* execute a function presses a key on the keyboard: */

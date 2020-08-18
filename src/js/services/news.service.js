@@ -1,6 +1,6 @@
 import axios from '../plugins/axios';
 
-export async function getNews() {
+export default async function getNews() {
   try {
     const response = await axios.get('/news');
     console.log(response);

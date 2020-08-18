@@ -5,14 +5,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 // const $ = require( "jquery" )( window );
 import 'jquery';
 import UI from './config/ui.config';
-import { validate } from './helpers/validate';
+import validate from './helpers/validate';
 import { showInputError, removeInputError, inputAutocompleteCreate } from './views/form';
 import { login, register } from './services/auth.service';
 import { notify } from './views/notifications';
-import { getNews } from './services/news.service';
+import getNews from './services/news.service';
 import { getCountriesList, getCitiesList } from './store/locations';
-import { masked } from './helpers/masked';
-import { serialize } from './helpers/serialize';
+import masked from './helpers/masked';
+import serialize from './helpers/serialize';
 
 const {
   formLogin, formLoginInputs, formRegister, formRegisterInputs,
@@ -27,46 +27,7 @@ const inputsRegister = Object.values(formRegisterInputs).map((el) => {
   return el;
 }).flat(Infinity);
 
-const inputs = inputsLogin.concat(inputsRegister);
-
-// Events
-formLogin.addEventListener('submit', (e) => {
-  e.preventDefault();
-  onSubmit();
-});
-
-formRegister.addEventListener('submit', (e) => {
-  e.preventDefault();
-  onSubmitRegister();
-});
-
-inputs.forEach((el) => el.addEventListener('focus', () => removeInputError(el)));
-
-document.addEventListener('DOMContentLoaded', () => {
-  const inputsMasked = document.querySelectorAll('[data-mask]');
-  inputsMasked.forEach((el) => {
-    masked(el);
-  });
-});
-
-formRegisterInputs.inputCountry.addEventListener('focus', () => {
-  getCountriesList().then((countries) => {
-    inputAutocompleteCreate(formRegisterInputs.inputCountry, countries);
-  });
-});
-
-formRegisterInputs.inputCountry.addEventListener('input', (e) => {
-  formRegisterInputs.inputCity.disabled = !e.target.value;
-});
-
-formRegisterInputs.inputCity.addEventListener('focus', () => {
-  const countryID = formRegisterInputs.inputCountry.dataset.id;
-  if (countryID) {
-    getCitiesList(countryID).then((cities) => {
-      inputAutocompleteCreate(formRegisterInputs.inputCity, cities);
-    });
-  }
-});
+const inputs = inputsRegister.concat(inputsLogin);
 
 // Handlers
 async function onSubmit() {
@@ -122,7 +83,7 @@ async function onSubmitRegister() {
   } catch (err) {
     // show error notify
     let message = '';
-    if (err.hasOwnProperty('response')) {
+    if (Object.prototype.hasOwnProperty.call(err, 'response')) {
       message = err.response.data.message;
     } else {
       message = err.message || 'Registration failed';
@@ -130,6 +91,45 @@ async function onSubmitRegister() {
     notify({ msg: message, className: 'alert-danger' });
   }
 }
+
+// Events
+formLogin.addEventListener('submit', (e) => {
+  e.preventDefault();
+  onSubmit();
+});
+
+formRegister.addEventListener('submit', (e) => {
+  e.preventDefault();
+  onSubmitRegister();
+});
+
+inputs.forEach((el) => el.addEventListener('focus', () => removeInputError(el)));
+
+document.addEventListener('DOMContentLoaded', () => {
+  const inputsMasked = document.querySelectorAll('[data-mask]');
+  inputsMasked.forEach((el) => {
+    masked(el);
+  });
+});
+
+formRegisterInputs.inputCountry.addEventListener('focus', () => {
+  getCountriesList().then((countries) => {
+    inputAutocompleteCreate(formRegisterInputs.inputCountry, countries);
+  });
+});
+
+formRegisterInputs.inputCountry.addEventListener('input', (e) => {
+  formRegisterInputs.inputCity.disabled = !e.target.value;
+});
+
+formRegisterInputs.inputCity.addEventListener('focus', () => {
+  const countryID = formRegisterInputs.inputCountry.dataset.id;
+  if (countryID) {
+    getCitiesList(countryID).then((cities) => {
+      inputAutocompleteCreate(formRegisterInputs.inputCity, cities);
+    });
+  }
+});
 
 // denis.m.pcspace@gmail.com
 // dmgame12345

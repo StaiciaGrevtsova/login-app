@@ -10,7 +10,7 @@ const regExpDic = {
  * @param {HTMLInputElement} el
  * @returns {Boolean} - Return true if input valid or doesn't have data-required attr
  */
-export function validate(el) {
+export default function validate(el) {
   const regExpName = el.dataset.required;
   if (!regExpDic[regExpName]) return true;
   return regExpDic[regExpName].test(el.value);
